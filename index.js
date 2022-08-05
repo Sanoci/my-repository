@@ -1,28 +1,57 @@
 const express = require("express");
 const axios = require("axios");
 const cors = require("cors");
+require("dotenv").config();
+
 //API EXWjXefvZTEEBIar
 const app = express();
 app.use(cors());
 app.use(express.json());
+
 app.get("/comics", async (req, res) => {
-  axios
-    .get(
-      "https://lereacteur-marvel-api.herokuapp.com/comics?apiKey=EXWjXefvZTEEBIar"
-    )
-    .then((response) => {
-      res.json(response.data);
-    });
+  try {
+    const response = await axios.get(
+      `https://lereacteur-marvel-api.herokuapp.com/comics?apiKey=${process.env.MARVEL_API_KEY}`
+    );
+    res.json(response.data);
+  } catch (error) {
+    console.log(error.message);
+  }
 });
+
 app.get("/comics/:characterld", async (req, res) => {
-  axios
-    .get(
-      "https://lereacteur-marvel-api.herokuapp.com/comics/5fc8ba1fdc33470f788f88b3?apiKey=EXWjXefvZTEEBIar"
-    )
-    .then((response) => {
-      res.json(response.data);
-    });
+  try {
+    const response = await axios.get(
+      `https://lereacteur-marvel-api.herokuapp.com/comics/5fcf91f4d8a2480017b91453?apiKey=${process.env.MARVEL_API_KEY}`
+    );
+    res.json(response.data);
+  } catch (error) {
+    console.log(error.message);
+  }
 });
+
+app.get("/characters", async (req, res) => {
+  try {
+    const response = await axios.get(
+      `https://lereacteur-marvel-api.herokuapp.com/characters?apiKey=${process.env.MARVEL_API_KEY}`
+    );
+    res.json(response.data);
+  } catch (error) {
+    console.log(error.message);
+  }
+});
+
+app.get("/character/:characterld", async (req, res) => {
+  try {
+    const response = await axios.get(
+      `https://lereacteur-marvel-api.herokuapp.com/character/5fcf91f4d8a2480017b91453?apiKey=${process.env.MARVEL_API_KEY}`
+    );
+    res.json(response.data);
+  } catch (error) {
+    console.log(error.message);
+  }
+});
+
 app.listen(4000, () => {
-  console.log("");
+  console.log("Serveur OK !");
 });
